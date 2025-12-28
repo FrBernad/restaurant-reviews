@@ -11,13 +11,8 @@ The project is designed to demonstrate:
 * correct handling of concurrent writes
 * clean layering and testability
 
-The system is composed of multiple Spring Boot services that communicate through **Apache Kafka**, persist data in *
-*PostgreSQL**, and optionally use **Redis** for read optimization. The focus is on architectural correctness, clarity,
+The system is composed of multiple Spring Boot services that communicate through **Apache Kafka**, persist data in **PostgreSQL**, and optionally use **Redis** for read optimization. The focus is on architectural correctness, clarity,
 and realistic backend design rather than feature completeness.
-
-Below is a **drop-in replacement** section for your README that (a) **explains each module’s responsibility** clearly and (b) adds a **Design Decisions** section with the key trade-offs.
-
-You can paste this under “Project Overview”.
 
 ---
 
@@ -156,4 +151,3 @@ For a production ready project, CDC should be considered.
 This diagram shows only the **core runtime flow** between client, services, and Kafka.
 
 ![Architecture Diagram](.assets/images/architecture.png)
-```
