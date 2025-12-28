@@ -2,26 +2,39 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: review-service
+
   datasource:
     url: jdbc:postgresql://localhost:5432/reviews
     username: reviews
     password: reviews
+    driver-class-name: org.postgresql.Driver
+
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: validate
     properties:
       hibernate:
         format_sql: true
+
   flyway:
     enabled: true
+    locations: classpath:db/migration
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:29092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false
 
 app:
   kafka:
     topics:
-      reviewsEvents: reviews.events
+      review-created: review-created-topic
+    consumer:
+      review-created:
+        concurrency: 2

@@ -1,8 +1,9 @@
-package com.peya.interview.reviewservice.repository.entity;
+package com.peya.interview.reviewservice.model.entity;
 
 import com.peya.interview.persistance.generator.GeneratedUuidV7;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,7 @@ import java.util.UUID;
       @Index(name = "idx_reviews_user_id", columnList = "user_id")
     })
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewEntity {
