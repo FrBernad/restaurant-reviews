@@ -3,6 +3,7 @@ package com.peya.interview.reviewservice.service;
 import com.peya.interview.events.ReviewCreatedEvent;
 import com.peya.interview.reviewservice.messaging.producer.ReviewEventProducer;
 import com.peya.interview.reviewservice.model.dto.request.CreateReviewDto;
+import com.peya.interview.reviewservice.model.dto.response.ReducedSlice;
 import com.peya.interview.reviewservice.model.dto.response.ReviewDto;
 import com.peya.interview.reviewservice.model.entity.ReviewEntity;
 import com.peya.interview.reviewservice.model.exceptions.DuplicateReviewException;
@@ -11,7 +12,6 @@ import com.peya.interview.reviewservice.service.mapper.ReviewMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,9 +62,14 @@ public class ReviewServiceImpl implements ReviewService {
 
   @Override
   @Transactional(readOnly = true)
-  public Slice<ReviewDto> getReviewsByRestaurant(final UUID restaurantId, final Pageable pageable) {
-    return reviewRepository
-        .findByRestaurantIdOrderByCreatedAtDesc(restaurantId, pageable)
-        .map(reviewMapper::entityToDto);
+  public ReducedSlice<ReviewDto> getReviewsByRestaurant(
+      final UUID restaurantId, final Pageable pageable) {
+    final var reviewsSlice =
+        reviewRepository
+            .findByRestaurantIdOrderByCreatedAtDesc(restaurantId, pageable)
+            .map(reviewMapper::entityToDto);
+
+    return new ReducedSlice<>(
+        reviewsSlice.getContent(), reviewsSlice.hasNext(), pageable.getPageNumber());
   }
 }

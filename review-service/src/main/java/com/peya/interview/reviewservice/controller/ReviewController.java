@@ -1,12 +1,12 @@
 package com.peya.interview.reviewservice.controller;
 
 import com.peya.interview.reviewservice.model.dto.request.CreateReviewDto;
+import com.peya.interview.reviewservice.model.dto.response.ReducedSlice;
 import com.peya.interview.reviewservice.model.dto.response.ReviewDto;
 import com.peya.interview.reviewservice.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class ReviewController {
   private final ReviewService reviewService;
 
   @GetMapping
-  public ResponseEntity<Slice<ReviewDto>> getReviewsByRestaurant(
+  public ResponseEntity<ReducedSlice<ReviewDto>> getReviewsByRestaurant(
       @RequestParam final UUID restaurantId,
       @RequestParam final Integer page,
       @RequestParam final Integer size) {

@@ -50,3 +50,7 @@ app:
   redis:
     rating-cache:
       ttl: PT5M
+
+  clients:
+    rating:
+      base-url: http://rating-service:8082
